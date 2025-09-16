@@ -314,7 +314,7 @@ def admin_reply(submission_id):
     """Admin reply to a specific submission"""
     conn = get_db_connection()
     if not conn:
-        flash('Database connection failed.', 'error')
+        flash('Database connection failed. Check your internet connection and try again', 'error')
         return redirect(url_for('admin'))
     
     try:
