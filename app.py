@@ -1,12 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, session
 from flask_mail import Mail, Message
-from flask_session import Session
 import psycopg2
 import os
 from datetime import datetime
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import hashlib
 import secrets
 from urllib.parse import urlparse
@@ -20,12 +16,9 @@ load_dotenv()
 # Configuration from environment variables
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')
 
-# Session configuration
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_KEY_PREFIX'] = 'contact_admin:'
-Session(app)
+# Session configuration - using simple session instead of Flask-Session
+# This avoids compatibility issues with Python 3.13
+app.config['PERMANENT_SESSION_LIFETIME'] = 3600  # 1 hour
 
 # Database configuration from environment variables
 def get_database_url():
@@ -114,14 +107,15 @@ def init_database():
 def send_email_notification(name, email, subject, message):
     """Send email notification for new contact submission"""
     try:
-        # Create message
-        msg = MIMEMultipart()
-        msg['From'] = MAIL_USERNAME
-        msg['To'] = MAIL_USERNAME  # Send to yourself
-        msg['Subject'] = f"New Contact Form Submission: {subject}"
+        # Create message using Flask-Mail
+        msg = Message(
+            subject=f"New Contact Form Submission: {subject}",
+            sender=MAIL_USERNAME,
+            recipients=[MAIL_USERNAME]  # Send to yourself
+        )
         
         # Email body
-        body = f"""
+        msg.body = f"""
         New contact form submission received:
         
         Name: {name}
@@ -132,15 +126,8 @@ def send_email_notification(name, email, subject, message):
         Submitted on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         """
         
-        msg.attach(MIMEText(body, 'plain'))
-        
         # Send email
-        server = smtplib.SMTP(MAIL_SERVER, MAIL_PORT)
-        server.starttls()
-        server.login(MAIL_USERNAME, MAIL_PASSWORD)
-        text = msg.as_string()
-        server.sendmail(MAIL_USERNAME, MAIL_USERNAME, text)
-        server.quit()
+        mail.send(msg)
         
         print("Email notification sent successfully")
         return True
@@ -151,14 +138,15 @@ def send_email_notification(name, email, subject, message):
 def send_reply_email(recipient_email, recipient_name, subject, reply_message):
     """Send reply email to user"""
     try:
-        # Create message
-        msg = MIMEMultipart()
-        msg['From'] = MAIL_USERNAME
-        msg['To'] = recipient_email
-        msg['Subject'] = f"Re: {subject}"
+        # Create message using Flask-Mail
+        msg = Message(
+            subject=f"Re: {subject}",
+            sender=MAIL_USERNAME,
+            recipients=[recipient_email]
+        )
         
         # Email body
-        body = f"""
+        msg.body = f"""
         Dear {recipient_name},
         
         Thank you for contacting me through my portfolio website. I have received your message and here is my reply:
@@ -173,15 +161,8 @@ def send_reply_email(recipient_email, recipient_name, subject, reply_message):
         This is an automated reply from my portfolio contact system.
         """
         
-        msg.attach(MIMEText(body, 'plain'))
-        
         # Send email
-        server = smtplib.SMTP(MAIL_SERVER, MAIL_PORT)
-        server.starttls()
-        server.login(MAIL_USERNAME, MAIL_PASSWORD)
-        text = msg.as_string()
-        server.sendmail(MAIL_USERNAME, recipient_email, text)
-        server.quit()
+        mail.send(msg)
         
         print(f"Reply email sent successfully to {recipient_email}")
         return True
@@ -270,6 +251,7 @@ def admin_login():
         if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
             session['admin_logged_in'] = True
             session['admin_username'] = username
+            session.permanent = True  # Make session permanent
             flash('Login successful!', 'success')
             return redirect(url_for('admin'))
         else:
