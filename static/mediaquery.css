@@ -286,7 +286,7 @@
     }
     
     #nav-container #navbar #social-icons {
-        padding: 4px 60px;
+        padding: 4px 10px;
         border-radius: 5px;
         border: 2px solid #ffbf00;
     }
@@ -388,7 +388,7 @@
     #nav-container #navbar #social-icons {
         display: flex;
         margin: 5px;
-        padding: 4px 80px;
+        padding: 4px 60px;
         border-radius: 5px;
         border: 2px solid #ffbf00;
     }
