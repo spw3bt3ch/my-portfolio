@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-wrapper">
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <div class="admin-title-section">
+                    <h1 class="admin-title">Contact Submissions</h1>
+                    <p class="admin-subtitle">View and manage contact form submissions</p>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('admin_logout') }}" class="logout-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16,17 21,12 16,7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            {% if submissions %}
+                <div class="submissions-count">
+                    <span class="count-badge">{{ submissions|length }} submission{{ 's' if submissions|length != 1 else '' }}</span>
+                </div>
+
+                <div class="submissions-grid">
+                    {% for submission in submissions %}
+                    <div class="submission-card">
+                        <div class="submission-header">
+                            <div class="submission-meta">
+                                <h3 class="submission-name">{{ submission[1] }}</h3>
+                                <p class="submission-email">{{ submission[2] }}</p>
+                            </div>
+                            <div class="submission-date">
+                                <span class="date-label">Submitted:</span>
+                                <span class="date-value">{{ submission[5].strftime('%B %d, %Y at %I:%M %p') }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="submission-content">
+                            <div class="submission-subject">
+                                <strong>Subject:</strong> {{ submission[3] }}
+                            </div>
+                            <div class="submission-message">
+                                <strong>Message:</strong>
+                                <p>{{ submission[4] }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="submission-actions">
+                            <a href="{{ url_for('admin_reply', submission_id=submission[0]) }}" class="action-btn reply-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Reply
+                            </a>
+                            <span class="submission-id">ID: {{ submission[0] }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-submissions">
+                    <div class="no-submissions-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>No submissions yet</h3>
+                    <p>Contact form submissions will appear here once people start sending messages.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+/* Admin Page Styles */
+.admin-wrapper {
+    min-height: 100vh;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(198, 119, 120, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 120, 120, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    background-attachment: fixed;
+    padding: 2rem 0;
+    position: relative;
+}
+
+.admin-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.admin-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(45deg, transparent 49%, rgba(255,255,255,0.03) 50%, transparent 51%),
+        linear-gradient(-45deg, transparent 49%, rgba(255,255,255,0.03) 50%, transparent 51%);
+    background-size: 60px 60px, 60px 60px;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: textureMove 20s linear infinite;
+}
+
+@keyframes textureMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.admin-header {
+    margin-bottom: 3rem;
+    color: white;
+}
+
+.admin-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-title-section {
+    text-align: left;
+}
+
+.admin-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.admin-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+}
+
+.admin-content {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.submissions-count {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.count-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.submissions-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.submission-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid #dc3545;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submission-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.submission-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.submission-meta h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: #333;
+}
+
+.submission-email {
+    margin: 0;
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.submission-date {
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.date-label {
+    color: #666;
+    display: block;
+}
+
+.date-value {
+    color: #333;
+    font-weight: 500;
+}
+
+.submission-content {
+    margin-bottom: 1.5rem;
+}
+
+.submission-subject {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.submission-message {
+    color: #555;
+    line-height: 1.6;
+}
+
+.submission-message p {
+    margin: 0.5rem 0 0 0;
+    white-space: pre-wrap;
+}
+
+.submission-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    color: white;
+}
+
+.submission-id {
+    font-size: 0.9rem;
+    color: #666;
+    font-family: monospace;
+}
+
+/* No Submissions State */
+.no-submissions {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+}
+
+.no-submissions-icon {
+    margin-bottom: 1.5rem;
+    color: #ccc;
+}
+
+.no-submissions h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.no-submissions p {
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .admin-title-section {
+        text-align: center;
+    }
+    
+    .admin-title {
+        font-size: 2.5rem;
+    }
+    
+    .admin-subtitle {
+        font-size: 1rem;
+    }
+    
+    .admin-content {
+        padding: 1.5rem;
+    }
+    
+    .submission-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .submission-date {
+        text-align: left;
+    }
+    
+    .submission-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .action-btn {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-wrapper {
+        padding: 1rem 0;
+    }
+    
+    .admin-container {
+        padding: 0 0.5rem;
+    }
+    
+    .admin-title {
+        font-size: 2rem;
+    }
+    
+    .admin-content {
+        padding: 1rem;
+    }
+    
+    .submission-card {
+        padding: 1rem;
+    }
+}
+</style>
+{% endblock %}

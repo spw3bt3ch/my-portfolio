@@ -1,6 +1,184 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="resume-container">
+<div class="resume-wrapper">
+    <div class="resume-container">
+        <!-- Header Section -->
+        <header class="resume-header">
+            <div class="header-content">
+                <h1 class="name">Ogunjimi Samuel Seye</h1>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-label">Portfolio:</span>
+                        <a href="https://my-portfolio-8047.onrender.com" target="_blank" class="contact-link">my-portfolio-8047.onrender.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <a href="mailto:samueloluwapelumi8@gmail.com" class="contact-link">samueloluwapelumi8@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <a href="tel:+2347077705842" class="contact-link">+234-707-770-5842</a>
+                    </div>
+                </div>
+                <div class="download-section">
+                    <button id="downloadBtn" class="download-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Resume
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="resume-content">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Professional Summary -->
+                <section class="resume-section">
+                    <h2 class="section-title">Professional Summary</h2>
+                    <p class="summary-text">
+                        ICT Instructor with extensive experience teaching secondary school students in Lagos, Nigeria. 
+                        Proficient in delivering hands-on lessons in computer literacy, programming, and digital skills. 
+                        Committed to preparing students with relevant 21st-century ICT knowledge for academic and career success.
+                    </p>
+                </section>
+
+                <!-- Core Competencies -->
+                <section class="resume-section">
+                    <h2 class="section-title">Core Competencies</h2>
+                    <ul class="competencies-list">
+                        <li>Computer Literacy (Microsoft Office Suite, Internet Navigation)</li>
+                        <li>Programming Instruction (Python, HTML, CSS, JavaScript, Java)</li>
+                        <li>ICT Curriculum Development</li>
+                        <li>Classroom and Curriculum Management</li>
+                        <li>Digital Safety and Online Etiquette</li>
+                        <li>Student Mentorship and Guidance</li>
+                        <li>Strong Communication and Interpersonal Skills</li>
+                        <li>ICT Room management</li>
+                        <li>Computer Engineering (Desktop & Laptop)</li>
+                    </ul>
+                </section>
+
+                <!-- Professional Experience -->
+                <section class="resume-section">
+                    <h2 class="section-title">Professional Experience</h2>
+                    
+                    <div class="experience-item">
+                        <h3 class="job-title">FREELANCER</h3>
+                        <p class="job-duration">2022 - Present</p>
+                        <ul class="job-responsibilities">
+                            <li>Web Design & Development</li>
+                            <li>Sales & Repair of computers</li>
+                            <li>Design Graphics (Flyers, Banner, Business cards, etc)</li>
+                            <li>Edition Photos and Videos</li>
+                            <li>Online coding Instruction</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <h3 class="job-title">ICT PERSONNEL</h3>
+                        <p class="company-name">Physio-fit Physiotherapy Hospitals - Mainland (New Oko-Oba) & Island (Ajah) Lagos</p>
+                        <p class="job-duration">2019-2022</p>
+                        <ul class="job-responsibilities">
+                            <li>Managed Organization's website</li>
+                            <li>Developed and managed the organization MS-Access Electronic Medical Record (EMR)</li>
+                            <li>Designed all Graphics for organization publications, and other printings like banners etc</li>
+                            <li>Managed and maintained computers (workstations)</li>
+                            <li>Collaborated with organization's marketing departments in creating digital marketing contents</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- ICT Instructor Experience -->
+                <section class="resume-section">
+                    <h2 class="section-title">ICT INSTRUCTOR</h2>
+                    <p class="company-name">Joy Children Schools - Agege & Ogba, Lagos, Nigeria</p>
+                    <p class="job-duration">2018-2019</p>
+                    <ul class="job-responsibilities">
+                        <li>Designed and implemented ICT curriculum tailored for primary and secondary education</li>
+                        <li>Delivered engaging lessons in computer literacy, programming, and safe use of technology</li>
+                        <li>Conducted hands-on projects such as coding exercises, website design, and presentations</li>
+                        <li>Organized digital literacy workshops, competitions, and coding clubs to enhance learning</li>
+                        <li>Collaborated with faculty to integrate ICT across subjects</li>
+                    </ul>
+                </section>
+
+                <!-- Education -->
+                <section class="resume-section">
+                    <h2 class="section-title">Education</h2>
+                    <div class="education-item">
+                        <h3 class="degree">Software Engineering (MMS)</h3>
+                        <p class="institution">National Institute for Information Technology (NIIT) - Ikeja</p>
+                        <p class="status">In-view</p>
+                    </div>
+                    <div class="education-item">
+                        <h3 class="degree">Computer Science</h3>
+                        <p class="institution">National Open University (NOUN)</p>
+                        <p class="status">In-view</p>
+                    </div>
+                    <div class="education-item">
+                        <h3 class="degree">Secondary School Education</h3>
+                        <p class="year">2006</p>
+                    </div>
+                    <div class="education-item">
+                        <h3 class="degree">Primary School Education</h3>
+                        <p class="year">2001</p>
+                    </div>
+                </section>
+
+                <!-- Certifications -->
+                <section class="resume-section">
+                    <h2 class="section-title">Certifications</h2>
+                    <ul class="certifications-list">
+                        <li>Android Development (Online) (2025)</li>
+                        <li>JAVA Masterclass (Online) (2025)</li>
+                        <li>HTML & CSS Workflow (Online) (2018)</li>
+                        <li>Web Design for Web Developers (Online) (2018)</li>
+                        <li>Website Setup (Online) (2018)</li>
+                    </ul>
+                </section>
+
+                <!-- Skills -->
+                <section class="resume-section">
+                    <h2 class="section-title">Skills</h2>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4>Web Development</h4>
+                            <p>HTML5, CSS3, JavaScript</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Design Tools</h4>
+                            <p>Figma, Photoshop, CorelDraw, Adobe Illustrator, Canva</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Productivity</h4>
+                            <p>Microsoft Office Suite</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>AI Tools</h4>
+                            <p>Google Gemini, ChatGPT, Vheer</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Video Editing</h4>
+                            <p>Filmora, Capcut</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- References -->
+                <section class="resume-section">
+                    <h2 class="section-title">References</h2>
+                    <p class="references-text">Available upon request</p>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

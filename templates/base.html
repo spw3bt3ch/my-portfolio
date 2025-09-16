@@ -22,14 +22,17 @@
             <!-- Navigation Menu -->
             <ul id="nav-menu">
                 <li><a href='{{url_for("about_me")}}' title="Home Page">About Me</a></li>
+                <li><a href='{{url_for("resume")}}' title="My Resume">Resume</a></li>
+                <li><a href='{{url_for("tetris")}}' title="Have some fun">Have some fun</a></li>
                 <li><a href="https://bit.ly/CodeYourFirstWebsite" target="_blank">Upcoming Bootcamp</a></li>
-                <li><a href="http://wa.me//+2347077705842" target="_blank">Contact Me</a></li>
+                <li><a href='{{url_for("contact")}}' title="Send me a message">Send me a mail</a></li>
             </ul>
             <div id="social-icons">
                 <div class="social"><a href="https://web.facebook.com/smiictinstitute" target="_blank"><img src="/static/images/icons/facebook.png" alt="facebook"></a></div>
                 <div class="social"><a href="https://www.instagram.com/smiictinstitute/" target="_blank"><img src="/static/images/icons/instagram.png" alt="Instagram"></a></div>
                 <div class="social"><a href="https://x.com/spwebtech87" target="_blank"><img src="/static/images/icons/twitter.png" alt="Twitter"></a></div>
                 <div class="social"><a href="https://www.youtube.com/@smiictinstitute" target="_blank"><img src="/static/images/icons/youtube.png" alt="YouTube"></a></div>
+                <div class="social admin-icon"><a href="{{ url_for('admin_login') }}" title="Admin Panel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><circle cx="12" cy="16" r="1"></circle><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></a></div>
             </div>
         </div>
     </div>
@@ -37,5 +40,4 @@
     
     {% endblock %}
 </body>
-
 </html>
